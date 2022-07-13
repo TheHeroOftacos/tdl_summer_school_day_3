@@ -1,7 +1,15 @@
 import HomePage from "../pageObjects/HomePage";
 import LoginPage from "../pageObjects/LoginPage";
 import RegistrationPage from "../pageObjects/RegistrationPage";
-
+import Basket from "../pageObjects/Basketpage";
+import AdressPage from "../pageObjects/SelectAddressPage";
+import DeliveryMethod from "../pageObjects/DeliveryMethodPage";
+import PaymentPage from "../pageObjects/PaymentOptionsPage";
+import Summary from "../pageObjects/OrderSummaryPage";
+import End from "../pageObjects/OrderCompletionPage";
+import SaveAddressesPage from "../pageObjects/SavedAddressesPage";
+import Createaddres from "../pageObjects/CreateAddressPage";
+import PayAdd from "../pageObjects/SavedPaymentMethodsPage";
 
 describe("Juice-shop without auto login", () => {
   beforeEach(() => {
@@ -155,14 +163,14 @@ describe("Juice-shop with Auto login", () => {
   // Click Submit
   // Click expand reviews button/icon (wait for reviews to appear)
   // Validate review -  "Tastes like metal"
-  it.only("Validate product card amount", () => {
+  it("Validate product card amount", () => {
     HomePage.grid.should('have.length', 12)
     HomePage.amountpopup.scrollIntoView().click()
-    HomePage.amountpopup.eq(1).click()
+    HomePage.option1.click()
     HomePage.grid.should('have.length', 24)
     HomePage.amountpopup.click()
-    HomePage.amountpopup.eq(2).click()
-    HomePage.grid.should('have.length', 36)
+    HomePage.option2.click()
+    HomePage.grid.should('have.length', 35)
   });
   // Create scenario - Validate product card amount
   // Validate that the default amount of cards is 12
@@ -170,7 +178,21 @@ describe("Juice-shop with Auto login", () => {
   // Validate that the amount of cards is 24
   // Change items per page (at the bottom of page) to 36
   // Validate that the amount of cards is 35
-
+  it("add review", () => {
+    HomePage.searchbut.click()
+    HomePage.search.type('Girlie').type('{enter}')
+    HomePage.addtobasket.click()
+    HomePage.basket.click()
+    Basket.checkoutbutton.click()
+    AdressPage.Adress.click()
+    AdressPage.continue.click()
+    DeliveryMethod.speed.click()
+    DeliveryMethod.continue.click()
+    PaymentPage.pay.click()
+    PaymentPage.continue.click()
+    Summary.continue.click()
+    End.validpurchase.should('contain','Thank you for your purchase!');
+  });
   // Create scenario - Buy Girlie T-shirt
   // Click on search icon
   // Search for Girlie
@@ -191,7 +213,21 @@ describe("Juice-shop with Auto login", () => {
   // Click on "Place your order and pay"
   // Create page object - OrderCompletionPage
   // Validate confirmation - "Thank you for your purchase!"
-
+  it("add adress", () => {
+    LoginPage.account.click()
+    HomePage.order.eq(1).click()
+    HomePage.saved.click()
+    SaveAddressesPage.addAdress.click()
+    Createaddres.Country.type('earth')
+    Createaddres.name.type('me')
+    Createaddres.number.type('3145093')
+    Createaddres.zip.type('3601')
+    Createaddres.Adress.type('earth2')
+    Createaddres.city.type('earth1')
+    Createaddres.state.type('earth3')
+    Createaddres.continue.click()
+    Createaddres.visible.should('be.visible')
+  });
   // Create scenario - Add address
   // Click on Account
   // Click on Orders & Payment
@@ -202,7 +238,18 @@ describe("Juice-shop with Auto login", () => {
   // Fill in the necessary information
   // Click Submit button
   // Validate that previously added address is visible
-
+  it.only("add payment", () => {
+    LoginPage.account.click()
+    HomePage.order.eq(1).click()
+    HomePage.pay.click()
+    PayAdd.Add.click()
+    PayAdd.name.type('me')
+    PayAdd.number.type('1111111111111111')
+    PayAdd.month.select('7')
+    PayAdd.year.select('2090')
+    PayAdd.submit.click()
+    PayAdd.cell.should('contain','me');
+  });
   // Create scenario - Add payment option
   // Click on Account
   // Click on Orders & Payment

@@ -43,15 +43,31 @@ class HomePage extends BasePage {
     return cy.get('[class="mat-grid-tile ng-star-inserted"]')
   }
   static get amountpopup(){
-    return cy.get('[aria-label="Items per page:"]')
+    // return cy.get('[aria-label="Items per page:"]')
+    return cy.get('.mat-select-value')
+
   }
-  static get amountpopup(){
-    return cy.get('[aria-label="Items per page:"]')
-  }
+   static get option1(){
+    return cy.get('[id="mat-option-1"]')
+   }
   static get option2(){
     return cy.get('[id="mat-option-2"]')
   }
-  
+  static get addtobasket(){
+    return cy.get('[aria-label="Add to Basket"]')
+  }
+  static get basket(){
+    return cy.get('[aria-label="Show the shopping cart"]')
+  }
+  static get order(){
+    return cy.get('[aria-label="Show Orders and Payment Menu"]')
+  }
+  static get saved(){
+    return cy.get('[aria-label="Go to saved address page"]')
+  }
+  static get pay(){
+    return cy.get('[aria-label="Go to saved payment methods page"]')
+  }
 }
 
 export default HomePage;
